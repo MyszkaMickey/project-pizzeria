@@ -11,8 +11,8 @@
         "init:gitignore:custom": "echo \"dist\" >> .gitignore",
         "test": "npm-run-all test:*",
         "test:html": "html-validate src/*.html",
-        "test:js": "eslint --fix src/js/",
-        "test:scss": "stylelint --fix src/sass/",
+        "test:js": "eslint src/js/",
+        "test:scss": "stylelint src/sass/",
         "build": "npm-run-all build:* test",
         "build:clean": "rimraf dist && mkdirp dist",
         "build:copy": "copyfiles -a -u 1 -e \"**/sass/**/*\" -e \"**/.gitkeep\" \"src/**/*\" dist",
@@ -34,17 +34,16 @@
         "copyfiles": "^2.1.0",
         "eslint": "^5.14.1",
         "globstar": "^1.0.0",
-        "html-validate": "^7.3.2",
+        "html-validate": "^2.8.0",
         "mkdirp": "^0.5.1",
         "npm-run-all": "^4.1.5",
-        "onchange": "^7.1.0",
+        "onchange": "^5.2.0",
         "postcss": "^8.2.6",
         "postcss-cli": "^8.3.1",
-        "postcss-scss": "^4.0.4",
         "rimraf": "^3.0.2",
         "sass": "^1.44.0",
-        "stylelint": "^14.11.0",
-        "stylelint-config-standard-scss": "^5.0.0",
-        "stylelint-scss": "^4.3.0"
+        "stylelint": "^9.10.1",
+        "stylelint-scss": "^3.5.4",
+        "typescript": "^4.7.4"
     }
 }
