@@ -83,7 +83,7 @@
 
       menuContainer.appendChild(thisProduct.element);
     }
-  }
+  
 
   initAccordion(){
     const thisProduct = this;
@@ -110,6 +110,7 @@
   
     });	
   }
+  }  
 
   const app = {
     initMenu: function () {
