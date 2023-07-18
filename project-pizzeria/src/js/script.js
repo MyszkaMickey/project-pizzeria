@@ -310,15 +310,17 @@
   class Cart{
     constructor(element){
       const thisCart = this;
-
+		
       thisCart.products = [];
-
+		
       thisCart.getElements(element);
+      // console.log('new Cart', thisCart);
+      thisCart.initActions();
     }
-
+	
     getElements(element){
       const thisCart = this;
-
+		
       thisCart.dom = {};
 
       thisCart.dom.wrapper = element;
@@ -330,8 +332,7 @@
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
       thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
-      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address); 
-    }
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);    }
 
     initActions(){
       const thisCart = this;
@@ -388,7 +389,7 @@
       const thisApp = this;
 
       const cartElem = document.querySelector(select.containerOf.cart);
-      thisApp.cart = new this.cart(cartElem);
+      thisApp.cart = new Cart(cartElem);
     }
   };
 
