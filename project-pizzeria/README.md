@@ -1,2 +1,1 @@
-version 2.4
-https://morning-shore-68520.herokuapp.com/#/home
+https://whispering-meadow-71428.herokuapp.com/
