@@ -1,20 +1,25 @@
-import {settings, select, classNames} from './settings.js';
+import {select, settings, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
 import Home from './components/Home.js';
 
+  
+  
+
 const app = {
-  initPages: function() {
+  initPages: function(){
     const thisApp = this;
+
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
-    const idFromHash = window.location.hash.replace('#/', '');
+
+    const idFromHash = window.location.hash.replace('#', '');
 
     let pageMatchingHash = thisApp.pages[0].id;
 
-    for(let page of thisApp.pages) {
-      if(page.id == idFromHash) {
+    for(const page of thisApp.pages){
+      if(page.id == idFromHash){
         pageMatchingHash = page.id;
         break;
       }
@@ -22,51 +27,70 @@ const app = {
 
     thisApp.activatePage(pageMatchingHash);
 
-    for (let link of thisApp.navLinks) {
+    for(const link of thisApp.navLinks){
       link.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();
 
+        /* get page id from href attribute*/
         const id = clickedElement.getAttribute('href').replace('#', '');
 
+        /* run thisApp acitvatePage with this id */
         thisApp.activatePage(id);
 
+        /* change URL hash */
+        window.location.hash = '#/' + id;
       });
     }
   },
-  activatePage: function(pageId) {
+
+  activatePage: function(pageId){
     const thisApp = this;
 
-    /* add class "active */
-    for(let page of thisApp.pages) {
+    /* add class active to matching pages, remove from non-matching */
+    for(const page of thisApp.pages){
+      // if(page.id == pageId){
+      //  page.classList.add(classNames.pages.active);
+      //} else{
+      //  page.classList.remove(classNames.pages.active);
+      //}
+
       page.classList.toggle(classNames.pages.active, page.id == pageId);
     }
-    for(let link of thisApp.navLinks) {
+
+    /* add class active to matching links, remove from non-matching */
+    for(const link of thisApp.navLinks){
       link.classList.toggle(
-        classNames.nav.active,
-        link.getAttribute('href') == '#' + pageId
+        classNames.nav.active, 
+        link.getAttribute('href') == '#' + pageId 
       );
     }
-    window.location.hash = '#/' + pageId;
 
   },
+
   initMenu: function(){
     const thisApp = this;
-    for(let productData in thisApp.data.products) {
+    // console.log('thisApp.data:', thisApp.data);
+      
+    for(let productData in thisApp.data.products){
       new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
     }
   },
+
   initData: function(){
     const thisApp = this;
-    const url = settings.db.url + '/' + settings.db.products;
+
     thisApp.data = {};
 
+    const url = settings.db.url + '/' + settings.db.products;
+    //   http: //localhost:3131    /    products
+
     fetch(url)
-      .then(function (rawResponse) {
+      .then(function(rawResponse){
         return rawResponse.json();
       })
-      .then(function (parsedResponse) {
-        console.log('parsedResponse', parsedResponse);
+      .then(function(parsedResponse){
+        // console.log('parsedResponse:', parsedResponse);
 
         /* save parsedResponse as thisApp.data.products */
         thisApp.data.products = parsedResponse;
@@ -74,8 +98,10 @@ const app = {
         /* execute initMenu method */
         thisApp.initMenu();
       });
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
+
+    // console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
+
   initCart: function(){
     const thisApp = this;
 
@@ -83,32 +109,35 @@ const app = {
     thisApp.cart = new Cart(cartElem);
 
     thisApp.productList = document.querySelector(select.containerOf.menu);
-
-    thisApp.productList.addEventListener('add-to-cart', function(event) {
+    thisApp.productList.addEventListener('add-to-cart', function(event){
       app.cart.add(event.detail.product);
     });
   },
-  initBooking: function() {
+
+  initBooking: function(){
     const thisApp = this;
 
-    thisApp.bookingWrapper = document.querySelector(select.containerOf.booking);
-    thisApp.bookingContainer = new Booking(thisApp.bookingWrapper);
+    const bookingContainer = document.querySelector(select.containerOf.booking);
 
+    thisApp.booking = new Booking(bookingContainer);
   },
-  initHome: function() {
+
+  initHome: function (){
     const thisApp = this;
 
-    thisApp.Home = new Home(document.querySelector(select.containerOf.home));
-
-
+    const homeContainer = document.querySelector(select.containerOf.homePage);
+    thisApp.home = new Home(homeContainer);
   },
+
+
   init: function(){
     const thisApp = this;
-    //console.log('*** App starting ***');
-    //console.log('thisApp:', thisApp);
-    //console.log('classNames:', classNames);
-    //console.log('settings:', settings);
-    //console.log('templates:', templates);
+    // console.log('*** App starting ***');
+    // console.log('thisApp:', thisApp);
+    // console.log('classNames:', classNames);
+    // console.log('settings:', settings);
+    // console.log('templates:', templates);
+
     thisApp.initPages();
     thisApp.initData();
     thisApp.initCart();
