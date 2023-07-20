@@ -2,6 +2,10 @@
     "name": "fer-07-project",
     "version": "1.0.0",
     "description": "",
+    "engines": {
+        "node": "16.15.1",
+        "npm": "8.11.0"
+    },
     "main": "index.html",
     "scripts": {
         "init-project": "npm install && npm-run-all init:*",
@@ -23,7 +27,7 @@
         "server": "json-server --port 3131 --no-cors --delay 250 --watch dist/db/app.json",
         "watch": "npm-run-all build build-dev -p watch:* server",
         "watch:browsersync": "browser-sync start --server dist --files \"dist/**/*\" --ignore \"dist/db/**/*\"",
-		"watch:sassprefixer": "onchange \"src/sass/**/*.scss\" -- npm run build-dev",
+        "watch:sassprefixer": "onchange \"src/sass/**/*.scss\" -- npm run build-dev",
         "watch:copy": "onchange -e \"**/sass/**/*\" -e \"**/.gitkeep\" \"src/**/*\" -- copyfiles -a -u 1 {{changed}} dist"
     },
     "keywords": [],
